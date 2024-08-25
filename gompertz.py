@@ -105,7 +105,7 @@ labels = np.asarray(labels)[1:, 1:]
 tic = time.time()
 pred = [tuple(np.argmax(p, axis=1)) for p in [p1, p2, p3, p4, p5]]
 
-#Calculate Gompertz Function Ensemble
+#Calculate Gompertz Function Ensemble using grid search
 top = 1
 alpha_1 = 2
 alpha_2 = 1
@@ -116,7 +116,63 @@ labels = np.squeeze(labels)
 correct = np.where(predictions == labels)[0].shape[0]
 total = labels.shape[0]
 
-print("Accuracy = ",correct/total)
+print("Accuracy using grid search = ",correct/total)
+
+# End timing the process
+toc = time.time()
+
+# Print the execution time
+print(f"Execution Time: {toc - tic:.4f} seconds")
+
+classes = []
+for i in range(p1.shape[1]):
+    classes.append(str(i+1))
+metrics(labels,predictions,classes)
+
+# Start timing the process
+tic = time.time()
+pred = [tuple(np.argmax(p, axis=1)) for p in [p1, p2, p3, p4, p5]]
+
+#Calculate Gompertz Function Ensemble using genetic algorithm
+top = 3
+alpha_1 = 9.46
+alpha_2 = 4.96
+alpha_3 = 1.47
+
+predictions = Gompertz(top, alpha_1, alpha_2, alpha_3, p1, p2, p3, p4, p5)
+labels = np.squeeze(labels)
+correct = np.where(predictions == labels)[0].shape[0]
+total = labels.shape[0]
+
+print("Accuracy using genetic algorithm= ",correct/total)
+
+# End timing the process
+toc = time.time()
+
+# Print the execution time
+print(f"Execution Time: {toc - tic:.4f} seconds")
+
+classes = []
+for i in range(p1.shape[1]):
+    classes.append(str(i+1))
+metrics(labels,predictions,classes)
+
+# Start timing the process
+tic = time.time()
+pred = [tuple(np.argmax(p, axis=1)) for p in [p1, p2, p3, p4, p5]]
+
+#Calculate Gompertz Function Ensemble using differential evolution
+top = 1
+alpha_1 = 4.68
+alpha_2 = 1.83
+alpha_3 = 2.38
+
+predictions = Gompertz(top, alpha_1, alpha_2, alpha_3, p1, p2, p3, p4, p5)
+labels = np.squeeze(labels)
+correct = np.where(predictions == labels)[0].shape[0]
+total = labels.shape[0]
+
+print("Accuracy using differential evolution= ",correct/total)
 
 # End timing the process
 toc = time.time()
