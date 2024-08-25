@@ -5,6 +5,7 @@ import numpy as np
 from sklearn.metrics import *
 import math
 from sklearn.preprocessing import label_binarize
+import time
 
 #ROC-AUC
 from sklearn.metrics import roc_curve,auc
@@ -100,17 +101,25 @@ p4 = np.asarray(p4)[1:, 1:]
 p5 = np.asarray(p5)[1:, 1:]
 labels = np.asarray(labels)[1:, 1:]
 
+# Start timing the process
+tic = time.time()
 pred = [tuple(np.argmax(p, axis=1)) for p in [p1, p2, p3, p4, p5]]
-
 
 #Calculate Gompertz Function Ensemble
 top = 1
 alpha_1 = 2
 alpha_2 = 1
 alpha_3 = 6
+
 predictions = Gompertz(top, alpha_1, alpha_2, alpha_3, p1, p2, p3, p4, p5)
 labels = np.squeeze(labels)
 correct = np.where(predictions == labels)[0].shape[0]
 total = labels.shape[0]
 
 print("Accuracy = ",correct/total)
+
+# End timing the process
+toc = time.time()
+
+# Print the execution time
+print(f"Execution Time: {toc - tic:.4f} seconds")
