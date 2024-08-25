@@ -123,3 +123,8 @@ toc = time.time()
 
 # Print the execution time
 print(f"Execution Time: {toc - tic:.4f} seconds")
+
+classes = []
+for i in range(p1.shape[1]):
+    classes.append(str(i+1))
+metrics(labels,predictions,classes)
